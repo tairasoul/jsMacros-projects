@@ -1,4 +1,5 @@
 {
   "type.js": "lib/entityAggro.js",
-  "versions.json": "versions.json"
+  "versions.json": "versions.json",
+  "killaura.js": "main-files/killaura.js"
 }
