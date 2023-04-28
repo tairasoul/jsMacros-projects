@@ -1,4 +1,5 @@
 export = class InventoryItem {
     slot: number;
-    itemHelper: $ItemStackHelper
+    itemHelper: $ItemStackHelper;
+    defense: number | null
 }
