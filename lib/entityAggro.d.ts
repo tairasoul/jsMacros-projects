@@ -1,5 +1,3 @@
-import * as interfaces from "./interfaces"
-
-declare function getType(entity: EntityHelper<any>): interfaces.aggroType
+declare function getType(entity: EntityHelper<any>): { Passive: boolean, Neutral: boolean, Hostile: boolean, Player: boolean }
 
 exports = getType
