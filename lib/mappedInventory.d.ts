@@ -1,6 +1,12 @@
+interface ArmorSlot {
+    slot: number;
+    itemHelper: $ItemStackHelper;
+    defense: number;
+}
+
 export = class MappedInventory {
     slots:{
-        armor: Array<{slot: number, itemHelper: $ItemStackHelper, defense: number}>,
+        armor: {helmet: ArmorSlot, chestplate: ArmorSlot, leggings: ArmorSlot, boots: ArmorSlot}
         crafting: Array<{slot: number, itemHelper: $ItemStackHelper}>,
         inventory: Array<{slot: number, itemHelper: $ItemStackHelper}>,
         hotbar: Array<{slot: number, itemHelper: $ItemStackHelper}>,
