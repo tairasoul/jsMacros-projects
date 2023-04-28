@@ -1,6 +1,6 @@
 export = class MappedInventory {
     slots:{
-        armor: Array<{slot: number, itemHelper: $ItemStackHelper}>,
+        armor: Array<{slot: number, itemHelper: $ItemStackHelper, defense: number}>,
         crafting: Array<{slot: number, itemHelper: $ItemStackHelper}>,
         inventory: Array<{slot: number, itemHelper: $ItemStackHelper}>,
         hotbar: Array<{slot: number, itemHelper: $ItemStackHelper}>,
