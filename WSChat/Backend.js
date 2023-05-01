@@ -1,5 +1,4 @@
 const ws = require('ws');
-const {exec} = require('child_process')
 
 const wss = new ws.Server({
     port: 8080
