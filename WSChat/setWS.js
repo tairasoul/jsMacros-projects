@@ -1,4 +1,10 @@
-const ws = Request.createWS("YOUR-BACKEND-URL").connect();
+let ws = Request.createWS("YOUR-BACKEND-URL").connect();
+ws.onDisconnect = JavaWrapper.methodToJava(() => {
+    ws = Request.createWS("YOUR-BACKEND-URL").connect()
+    GlobalVars.putObject('WSConnection', {
+        ws: ws
+    })
+})
 ws.onDisconnect = JavaWrapper.methodToJava(() => {
     ws.connect()
 })
