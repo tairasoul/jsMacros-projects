@@ -1,0 +1,7 @@
+version: "2"
+authtoken: your-authtoken
+tunnels:
+  minecraft-wschat-server:
+    proto: http
+    # set addr to be your NGINX listening port
+    addr: 2000 
