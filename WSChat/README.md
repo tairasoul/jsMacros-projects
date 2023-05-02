@@ -6,4 +6,4 @@ Set setWS.js as a service, and put WSChat on the SendMessage event.
 To talk with people through the websocket, prefix your message with a .
 For example: .hello goobers
 
-I personally use ngrok to forward my websocket by doing ngrok http 8080
+I personally use ngrok to forward my websocket by editing config for multiple tunnels, then using nginx to redirect subdomains to each websocket port.
