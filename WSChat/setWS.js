@@ -1,20 +1,32 @@
-const WSUrl = "YOUR-BACKEND-URL"
+const WSUrl = "YOUR-BACKEND-URL";
 
-let ws = Request.createWS(WSUrl).connect();
+let method1;
+let method2;
 
-ws.onConnect = JavaWrapper.methodToJava(() => {
-    Chat.log(Chat.createTextBuilder().append("[").append('WS').withColor(2).append("] ").append('Connected to ' + WSUrl).withColor(9)
-            .build());
-})
+if (Client.mcVersion().includes("fabric")) {
+    Chat.log("Using Fabric mappings.")
+    method1 = 'method_1548';
+    method2 = 'method_1676';
+} else {   
+    Chat.log("Using Forge mappings.")
+    method1 = 'm_91094_';
+    method2 = 'm_92546_';
+}
+
+const getUser = () => {
+    return Client.getMinecraft()[method1]()[method2]()
+}
+
+const ws = Request.createWS(WSUrl).connect();
 
 let method; method = (websocket, /** @type {Websocket$Disconnected} */disconnected) => {
+    GlobalVars.putObject('WSConnection', {
+        ws: null,
+        connected: false
+    })
     if (!disconnected.isServer) {
-        Time.sleep(500);
-        ws = Request.createWS(WSUrl).connect();
-        ws.onConnect = JavaWrapper.methodToJava(() => {
-            Chat.log(Chat.createTextBuilder().append("[").append('WS').withColor(2).append("] ").append('Connected to ' + WSUrl).withColor(9)
-                    .build());
-        })
+        //Time.sleep();
+        const ws = Request.createWS(WSUrl).connect();
         ws.onTextMessage = JavaWrapper.methodToJava((ws, msg) => {
             const message = JSON.parse(msg)
             Chat.log(Chat.createTextBuilder().append("[").append('WS').withColor(2).append("] <")
@@ -23,11 +35,24 @@ let method; method = (websocket, /** @type {Websocket$Disconnected} */disconnect
                     .build());
         })
         GlobalVars.putObject('WSConnection', {
-            ws: ws
+            ws: ws,
+            connected: true
         })
         ws.onDisconnect = JavaWrapper.methodToJava(method)
+        ws.onError = JavaWrapper.methodToJava((websocket, /** @type {WebSocketException} */ exception) => {
+            Chat.log('error encountered')
+            Chat.log(exception)
+        })
+
+        ws.sendText(`${getUser()}&&connected`);
     }
 }
+
+ws.onError = JavaWrapper.methodToJava((websocket, /** @type {WebSocketException} */ exception) => {
+    Chat.log('error encountered')
+    Chat.log(exception)
+    FS.open('log.txt').append(exception + '\n')
+})
 
 ws.onDisconnect = JavaWrapper.methodToJava(method)
 
@@ -40,8 +65,8 @@ ws.onTextMessage = JavaWrapper.methodToJava((ws, msg) => {
 })
 
 GlobalVars.putObject('WSConnection', {
-    ws: ws
+    ws: ws,
+    connected: true
 })
 
-// register as service
-// i use ngrok to forward my ws
+ws.sendText(`${getUser()}&&connected`);
