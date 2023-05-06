@@ -23,11 +23,12 @@ function createBackend(port) {
             const split = msg.split('&&');
             if (split && split[1] == "connected") {
                 for (const prop in disconnectedClients) {
-                    if (disconnectedClients[prop].name == split[0]) {
+                    if (disconnectedClients[prop] && disconnectedClients[prop].name == split[0]) {
                         bufferMessages = false;
                         for (const bufferedMessage of bufferedMessages) {
                             socket.send(bufferedMessage)
                         }
+                        disconnectedClients[prop] = null
                     }
                 }
                 clientName = split[0];
@@ -67,3 +68,6 @@ function createBackend(port) {
         })
     })
 }
+
+createBackend(9090);
+createBackend(8080);
