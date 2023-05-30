@@ -28,7 +28,7 @@ function createBackend(port) {
                         for (const bufferedMessage of bufferedMessages) {
                             socket.send(bufferedMessage)
                         }
-                        disconnectedClients[prop] = null
+                        delete disconnectedClients[prop]
                     }
                 }
                 clientName = split[0];
